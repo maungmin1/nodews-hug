@@ -8,16 +8,16 @@ const crypto = require('crypto');
 const { Buffer } = require('buffer');
 const { exec, execSync } = require('child_process');
 const { WebSocket, createWebSocketStream } = require('ws');
-const UUID = process.env.UUID || '5efabea4-f6d4-91fd-b8f0-17e004c89c60'; // 运行哪吒v1,在不同的平台需要改UUID,否则会被覆盖
-const NEZHA_SERVER = process.env.NEZHA_SERVER || '';       // 哪吒v1填写形式：nz.abc.com:8008   哪吒v0填写形式：nz.abc.com
-const NEZHA_PORT = process.env.NEZHA_PORT || '';           // 哪吒v1没有此变量，v0的agent端口为{443,8443,2096,2087,2083,2053}其中之一时开启tls
-const NEZHA_KEY = process.env.NEZHA_KEY || '';             // v1的NZ_CLIENT_SECRET或v0的agent端口                
-const DOMAIN = process.env.DOMAIN || '1234.abc.com';       // 填写项目域名或已反代的域名，不带前缀，建议填已反代的域名
-const AUTO_ACCESS = process.env.AUTO_ACCESS || false;      // 是否开启自动访问保活,false为关闭,true为开启,需同时填写DOMAIN变量
-const WSPATH = process.env.WSPATH || UUID.slice(0, 8);     // 节点路径，默认获取uuid前8位
-const SUB_PATH = process.env.SUB_PATH || 'sub';            // 获取节点的订阅路径
-const NAME = process.env.NAME || '';                       // 节点名称
-const PORT = process.env.PORT || 3000;                     // http和ws服务端口
+const UUID = process.env.UUID || '5efabea4-f6d4-91fd-b8f0-17e004c89c60'; //When running Nezha v1, you need to change the UUID on different platforms, otherwise it will be overwritten.
+const NEZHA_SERVER = process.env.NEZHA_SERVER || '';       // Nezha v1 input format: nz.abc.com:8008 Nezha v0 input format: nz.abc.com
+const NEZHA_PORT = process.env.NEZHA_PORT || '';           // Nezha v1 does not have this variable. TLS is enabled when the agent port of v0 is one of {443, 8443, 2096, 2087, 2083, 2053}.
+const NEZHA_KEY = process.env.NEZHA_KEY || '';             // The NZ_CLIENT_SECRET port for v1 or the agent port for v0.                
+const DOMAIN = process.env.DOMAIN || '1234.abc.com';       // Enter the project domain name or the domain name that has been reverse-proxied, without the prefix. It is recommended to enter the domain name that has been reverse-proxied.
+const AUTO_ACCESS = process.env.AUTO_ACCESS || false;      // Enable automatic access keep-alive (false for off, true for on). The DOMAIN variable must also be specified.
+const WSPATH = process.env.WSPATH || UUID.slice(0, 8);     // The node path, by default, retrieves the first 8 digits of the UUID.
+const SUB_PATH = process.env.SUB_PATH || 'sub';            // Get the node's subscription path
+const NAME = process.env.NAME || '';                       // Node Name
+const PORT = process.env.PORT || 3000;                     // HTTP and WS service ports
 
 let ISP = '';
 const GetISP = async () => {
@@ -104,7 +104,7 @@ function resolveHost(host) {
   });
 }
 
-// VLE-SS处理
+// VLE-SS processing
 function handleVlessConnection(ws, msg) {
   const [VERSION] = msg;
   const id = msg.slice(1, 17);
@@ -135,7 +135,7 @@ function handleVlessConnection(ws, msg) {
   return true;
 }
 
-// Tro-jan处理
+// Trojan handling
 function handleTrojanConnection(ws, msg) {
   try {
     if (msg.length < 58) return false;
@@ -214,7 +214,7 @@ function handleTrojanConnection(ws, msg) {
     return false;
   }
 }
-// Ws 连接处理
+//Ws connection processing
 wss.on('connection', (ws, req) => {
   const url = req.url || '';
   ws.once('message', msg => {
@@ -289,7 +289,7 @@ const runnz = async () => {
       return;
     }
   } catch (e) {
-    // 进程不存在时继续运行nezha
+    // nezha continues to run even if the process does not exist.
   }
 
   await downloadFile();
@@ -322,12 +322,12 @@ tls: ${NZ_TLS}
 use_gitee_to_upgrade: false
 use_ipv6_country_code: false
 uuid: ${UUID}`;
-      
+      1¹1¹
       fs.writeFileSync('config.yaml', configYaml);
     }
-    command = `setsid nohup ./npm -c config.yaml >/dev/null 2>&1 &`;
+    command = `setsid noh¹up ./npm -c config.yaml >/dev/null 2>&1 &`;
   } else {
-    console.log('NEZHA variable is empty, skip running');
+    console.log('NEZHA variable is empty, skip running');é
     return;
   }
 
