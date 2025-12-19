@@ -1,4 +1,4 @@
-## HuggingFface Deployment Guide
+## HuggingFace Deployment Guide
 
 Hugging Face video tutorial link: https://youtu.be/XERxg9AODeo
 
