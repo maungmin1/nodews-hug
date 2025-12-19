@@ -1,42 +1,42 @@
-## hugggingfface部署指南
+## HuggingFface Deployment Guide
 
-huggingface视频教程地址：https://youtu.be/XERxg9AODeo
+Hugging Face video tutorial link: https://youtu.be/XERxg9AODeo
 
-1. fork 此项目
-2. 在Actions菜单允许 `I understand my workflows, go ahead and enable them` 按钮
-3. 将hug分支中的index.js填写需要的变量后混淆保存，js混肴地址：https://obfuscator.io 
-4. 在.github/workflows/build-hug-image.yml 44中修改镜像名称
-5. 去huggingface创建空白space，docker
-6. 创建一个新文件，文件名`Dockerfile` 内容如下:
+1. fork This project
+2. Allow the "I understand my workflows, go ahead and enable them" button in the Actions menu.
+3. After filling in the necessary variables in index.js within the hug branch, obfuscate and save it. The JavaScript obfuscation address is: https://obfuscator.io
+4. Modify the image name in .github/workflows/build-hug-image.yml 44
+5. Create an empty space on the hookface using Docker.
+6. Create a new file named `Dockerfile` with the following content:
 ```
-FROM ghcr.io/github用户名/镜像名:latest
+FROM ghcr.io/githubusername/mirrorname:latest
 
 ENV DOMAIN=space域名
 ```
 
-* PaaS 平台设置的环境变量
-  | 变量名        | 是否必须 | 默认值 | 备注 |
+* PaaS Platform environment variables
+  | variable name        | Is it necessary? | default value | Remark |
   | ------------ | ------ | ------ | ------ |
-  | UUID         | 否 |de04add9-5c68-6bab-950c-08cd5320df33| 开启了哪吒v1,请修改UUID|
-  | PORT         | 否 |  7860  |  监听端口                    |
-  | NEZHA_SERVER | 否 |        |哪吒v1填写形式：nz.abc.com:8008   哪吒v0填写形式：nz.abc.com|
-  | NEZHA_PORT   | 否 |        | 哪吒v1没有此变量，v0的agent端口| 
-  | NEZHA_KEY    | 否 |        | 哪吒v1的NZ_CLIENT_SECRET或v0的agent端口 |
-  | NAME         | 否 |        | 节点名称前缀，例如：Glitch |
-  | DOMAIN       | 是 |        | 项目分配的域名或已反代的域名，不包括https://前缀  |
-  | SUB_PATH     | 否 |  sub   | 订阅路径   |
-  | AUTO_ACCESS  | 否 |  true | 是否开启自动访问保活,false为关闭,true为开启,需同时填写DOMAIN变量 |
+  | UUID         | no |de04add9-5c68-6bab-950c-08cd5320df33| Nezha v1 has been enabled. Please modify the UUID.|
+  | PORT         | no |  7860  |  Listening port                    |
+  | NEZHA_SERVER | no |        | Nezha v1 form：nz.abc.com:8008   Nezha v0 form：nz.abc.com|
+  | NEZHA_PORT   | no |        | Nezha v1 does not have this variable, v0/s agent port | 
+  | NEZHA_KEY    | no |        | Nezha v1/s NZ_CLIENT_SECRET or v0/s agent port |
+  | NAME         | no |        | Node name prefixes, for example: Glitch |
+  | DOMAIN       | yes |        | The domain name assigned to the project or the domain name that has been reverse-proxied, excluding https://prefix  |
+  | SUB_PATH     | no |  sub   | Subscription path   |
+  | AUTO_ACCESS  | no |  true | Enable automatic access keep-alive (false for off, true for on). The DOMAIN variable must also be specified.|
 
-* 域名/${SUB_APTH}查看节点信息，非标端口，域名:端口/${SUB_APTH}
+* domain name/${SUB_APTH}View node information, non-standard ports, domain:port/${SUB_APTH}
 
-### 使用cloudflare workers 或 snippets 反代域名给节点套cdn加速
+### Use Cloudflare workers or snippets to reverse proxy domains to add CDN acceleration to nodes.
 ```
 export default {
     async fetch(request, env) {
         let url = new URL(request.url);
         if (url.pathname.startsWith('/')) {
             var arrStr = [
-                'your-space.domain', // 此处单引号里填写你的节点伪装域名
+                'your-space.domain', // Enter your spoofed domain name within these single quotes.
             ];
             url.protocol = 'https:'
             url.hostname = getRandomArray(arrStr)
@@ -52,19 +52,20 @@ function getRandomArray(array) {
 }
 ```
 
-## 开源协议说明（基于GPL）
+## Open source license description (based on GPL)
 
-本项目遵循 GNU 通用公共许可证（GNU General Public License, 简称 GPL）发布，并附加以下说明：
+This project is released under the GNU General Public License (GPL) and includes the following instructions.：
 
-1. 你可以自由地使用、复制、修改和分发本项目的源代码，前提是你必须保留原作者的信息及本协议内容；
-2. 修改后的版本也必须以相同协议开源；
-3. **未经原作者明确授权，不得将本项目或其任何部分用于商业用途。**
+1. You are free to use, copy, modify and distribute the source code of this project, provided that you retain the original author/s information and the contents of this agreement;
+2. The modified version must also be open source under the same license;
+3. **This project or any part thereof may not be used for commercial purposes without the express authorization of the original author.**
 
-商业用途包括但不限于：
-- 将本项目嵌入到出售的软件、系统或服务中；
-- 通过本项目直接或间接获利（例如通过广告、SaaS服务等）；
-- 在公司或组织内部作为商业工具使用。
+Commercial uses include, but are not limited to:
+- Embed this project into the software, system, or service you are selling;
+- Profit directly or indirectly from this project (e.g., through advertising, SaaS services, etc.).
+- Used as a business tool within a company or organization.
 
-如需获得商业授权，请联系原作者：[admin@eooce.com]
+For commercial licensing, please contact the original author:[admin@eooce.com]
 
-版权所有 ©2025 `eooce`
+all rights reserved ©2025 `eooce`
+
